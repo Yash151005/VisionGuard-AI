@@ -44,29 +44,47 @@ st.set_page_config(
 st.markdown("""
 <style>
 :root { color-scheme: dark; }
-.stApp { background: #071020; color: #f5f8ff; }
-[data-testid="stHeader"] { background: rgba(7,16,32,.92); }
-.block-container { padding-top: 1.25rem; padding-bottom: 2rem; max-width: 1500px; }
+.stApp {
+    background: #07121d;
+    background-image: linear-gradient(rgba(31, 72, 93, .09) 1px, transparent 1px), linear-gradient(90deg, rgba(31, 72, 93, .09) 1px, transparent 1px);
+    background-size: 48px 48px;
+    color: #edf7f5;
+    font-family: "Manrope", sans-serif;
+}
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
+[data-testid="stHeader"] { background: rgba(7,18,29,.88); }
+[data-testid="stSidebar"] { background: #091a26; border-right: 1px solid #1d3d49; }
+.block-container { padding-top: 2.2rem; padding-bottom: 3rem; max-width: 1480px; }
+h1, h2, h3 { letter-spacing: -.035em; }
 .hero {
-  padding: 1.35rem 1.5rem; border-radius: 18px;
-  background: linear-gradient(115deg, #0c1c38 0%, #102d50 55%, #071020 100%);
-  border: 1px solid #1d4267; margin-bottom: 1rem;
+    position: relative; overflow: hidden; padding: 1.7rem 1.8rem; border-radius: 10px;
+    background: linear-gradient(115deg, #0c2630 0%, #0d3540 58%, #0b202c 100%);
+    border: 1px solid #28616a; margin-bottom: 1.25rem; box-shadow: 0 16px 40px rgba(0, 0, 0, .18);
 }
-.hero h1 { margin: 0; font-size: 2.35rem; letter-spacing: -.04em; }
-.hero p { margin: .45rem 0 0; color: #b8cbe1; font-size: 1.02rem; }
+.hero:after { content: ""; position: absolute; right: -8%; top: -80%; width: 46%; height: 260%; transform: rotate(24deg); border-left: 1px solid rgba(111, 224, 204, .22); border-right: 1px solid rgba(111, 224, 204, .12); }
+.hero h1 { margin: 0; font-size: 2.25rem; font-weight: 800; letter-spacing: -.055em; }
+.hero p { margin: .45rem 0 0; color: #b8d0d2; font-size: .96rem; }
+.eyebrow, .workspace-kicker, .sidebar-label { color: #72e6d1; font-family: "DM Mono", monospace; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
 .kpi {
-  border: 1px solid #244364; border-radius: 14px; padding: 1rem;
-  background: #0e1d35; min-height: 105px;
+    border: 1px solid #24505a; border-radius: 8px; padding: 1rem 1.05rem;
+    background: rgba(12, 35, 45, .88); min-height: 106px; box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
 }
-.kpi .label { color: #a9bcd3; font-size: .85rem; }
-.kpi .value { color: #00d3ee; font-size: 1.65rem; font-weight: 750; margin-top: .2rem; }
+.kpi .label { color: #9bb9bc; font-family: "DM Mono", monospace; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.kpi .value { color: #72e6d1; font-size: 1.65rem; font-weight: 800; margin-top: .35rem; }
 .section {
-  border: 1px solid #203c5e; border-radius: 14px; padding: 1rem 1.1rem;
-  background: #0b192e; margin: .5rem 0 1rem;
+    border: 1px solid #214852; border-radius: 8px; padding: 1.15rem 1.2rem;
+    background: rgba(10, 30, 40, .86); margin: .5rem 0 1rem;
 }
-.small-muted { color: #a9bcd3; font-size: .88rem; }
+.small-muted { color: #9bb9bc; font-size: .84rem; }
+.status-note { margin: .5rem 0 1.25rem; padding: .7rem .9rem; border-radius: 6px; font-size: .84rem; border: 1px solid #6b5628; background: #241e12; color: #f0d99b; }
+.empty-title { margin: .25rem 0 .45rem; color: #edf7f5; font-size: 1.2rem; font-weight: 700; }
+.step { display: flex; gap: .7rem; align-items: flex-start; margin: .7rem 0; color: #c5d9d8; font-size: .9rem; }
+.step-number { display: inline-flex; width: 1.45rem; height: 1.45rem; flex: 0 0 1.45rem; align-items: center; justify-content: center; border: 1px solid #4b9f9a; border-radius: 50%; color: #72e6d1; font-family: "DM Mono", monospace; font-size: .7rem; }
 div.stButton > button[kind="primary"] {
-  background: #00bcd4; color: #061326; border: 0; font-weight: 700;
+    background: #72e6d1; color: #062029; border: 0; font-weight: 800;
+}
+div[data-testid="stFileUploader"] {
+    border: 1px dashed #3b7b7e; border-radius: 8px; background: rgba(11, 37, 46, .72); padding: .35rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -269,7 +287,8 @@ def maybe_upload_s3(bucket: str, key: str, payload: bytes) -> str:
 # ----------------------------- Header -----------------------------------------
 st.markdown(f"""
 <div class="hero">
-  <h1>🛡️ <span style="color:#00d3ee">VisionGuard</span> AI</h1>
+    <div class="eyebrow">VISUAL INSPECTION / CONTROL ROOM</div>
+    <h1><span style="color:#72e6d1">VisionGuard</span> AI</h1>
   <p>{APP_SUBTITLE} &nbsp;·&nbsp; <b>See → Investigate → Decide → Act</b></p>
   <p class="small-muted">OpenCV visual analysis · Explainable follow-up policy · Optional AWS evidence storage</p>
 </div>
@@ -279,10 +298,11 @@ cv5_ok, cv_message = cv5_status()
 if cv5_ok:
     st.success(f"Runtime check passed: {cv_message}")
 else:
-    st.warning(cv_message)
+    st.markdown(f'<div class="status-note"><b>Runtime notice</b><br>{cv_message}</div>', unsafe_allow_html=True)
 
 with st.sidebar:
-    st.header("Inspection controls")
+    st.markdown('<div class="sidebar-label">Inspection controls</div>', unsafe_allow_html=True)
+    st.header("Configure a run")
     mode = st.radio("Input type", ["Image inspection", "Video inspection"], index=0)
     sensitivity = st.slider("Edge sensitivity", 10, 90, 55, help="Higher values lower the Canny thresholds and usually produce more edge candidates.")
     min_area = st.slider("Minimum candidate area (px)", 20, 1200, 120, step=20)
@@ -309,19 +329,19 @@ if upload and upload.size > MAX_UPLOAD_MB * 1024 * 1024:
 if not upload:
     left, right = st.columns([1.35, 1])
     with left:
-        st.markdown("### Inspection workspace")
+        st.markdown('<div class="workspace-kicker">Ready for input</div><div class="empty-title">Start an inspection run</div>', unsafe_allow_html=True)
         st.markdown("""
         <div class="section">
-        <b>How to demo</b><br><br>
-        1. Upload a close-up photo or a short equipment video.<br>
-        2. Adjust sensitivity and candidate area to explore the visual evidence.<br>
-        3. Review the annotated image, edge map, and ranked contour candidates.<br>
-        4. Observe how the agent policy selects a next step from those results.<br>
-        5. Export the JSON report, or optionally store it in S3.
+        <div class="step"><span class="step-number">01</span><span>Upload a close-up photo or short equipment video.</span></div>
+        <div class="step"><span class="step-number">02</span><span>Tune sensitivity and candidate area for the scene.</span></div>
+        <div class="step"><span class="step-number">03</span><span>Review visual evidence and ranked regions.</span></div>
+        <div class="step"><span class="step-number">04</span><span>Follow the explainable next-step recommendation.</span></div>
+        <div class="step"><span class="step-number">05</span><span>Export the evidence report or store it in S3.</span></div>
         </div>
         """, unsafe_allow_html=True)
     with right:
-        st.markdown("### System status")
+        st.markdown('<div class="workspace-kicker">System status</div>', unsafe_allow_html=True)
+        st.markdown("### Runtime snapshot")
         st.metric("OpenCV runtime", cv_version())
         st.metric("AWS evidence storage", "Configured" if bucket else "Optional / not configured")
         st.metric("Analysis mode", "Classical CV + deterministic agent")
