@@ -1,0 +1,8 @@
+# Python 3.11 recommended.
+# IMPORTANT: verify that the exact OpenCV 5 wheel/build is available for your OS/architecture.
+# Do not replace OpenCV 5 with OpenCV 4 for the final competition entry.
+streamlit==1.50.0
+numpy==2.2.6
+Pillow==11.3.0
+boto3==1.40.46
+opencv-python==5.0.0
